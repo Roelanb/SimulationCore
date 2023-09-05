@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\font.ttf" />
+    <None Remove="Resources\Town_1.png" />
+    <None Remove="Resources\Town_10.png" />
+    <None Remove="Resources\Town_2.png" />
+    <None Remove="Resources\Town_3.png" />
+    <None Remove="Resources\Town_4.png" />
+    <None Remove="Resources\Town_5.png" />
+    <None Remove="Resources\Town_6.png" />
+    <None Remove="Resources\Town_7.png" />
+    <None Remove="Resources\Town_8.png" />
+    <None Remove="Resources\Town_9.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\font.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Town_1.png" />
+    <Content Include="Resources\Town_10.png" />
+    <Content Include="Resources\Town_2.png" />
+    <Content Include="Resources\Town_3.png" />
+    <Content Include="Resources\Town_4.png" />
+    <Content Include="Resources\Town_5.png" />
+    <Content Include="Resources\Town_6.png" />
+    <Content Include="Resources\Town_7.png" />
+    <Content Include="Resources\Town_8.png" />
+    <Content Include="Resources\Town_9.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MethodTimer.Fody" Version="3.2.2" />
+    <PackageReference Include="SFML.Net" Version="2.5.1" />
+  </ItemGroup>
+
+</Project>
