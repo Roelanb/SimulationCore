@@ -1,4 +1,4 @@
-﻿using Critters.SFML_Text;
+﻿using Critters.GraphHelpers;
 using SFML.Graphics;
 using SFML.System;
 

@@ -1,5 +1,5 @@
 ﻿
-using Critters.SFML_Text;
+using Critters.GraphHelpers;
 using SFML.Graphics;
 using SFML.Window;
 using Critters.Screens;
@@ -64,12 +64,14 @@ namespace Critters.Screens
             World.Update();
 
             // Checks user input and modifies the cameras position / rotation.
-            Camera.Update(deltaT);
+        //    Camera.Update(deltaT);
 
             // Format: 1234.56
             NrOfDeathString.StringText = $"Nr of deaths: {World.NrOfDeaths}";
 
             TickCount.StringText = $"Ticks: {World.Ticks} Evolutions: {World.Evolutions}";
+
+            
 
             // check for mouse overlap
             var bi = World.Hit(Mouse.GetPosition(window));
@@ -95,7 +97,7 @@ namespace Critters.Screens
             window.Clear(Configuration.Background);
 
             // Update the current view based off the cameras location/rotation
-            window.SetView(Camera.GetView());
+        //    window.SetView(Camera.GetView());
 
             foreach (var creature in World.Creatures)
             {
@@ -112,6 +114,13 @@ namespace Critters.Screens
             foreach (var obstacle in World.Obstacles)
             {
                 obstacle.Draw(window);
+            }
+
+            var brainView = World.Creatures.FirstOrDefault()?.Brain;
+
+            if (brainView != null)
+            {
+                brainView.Draw(window);
             }
 
 

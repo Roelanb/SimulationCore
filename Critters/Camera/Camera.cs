@@ -95,12 +95,12 @@ namespace Critters.ViewTools
             if (windowAspect > viewAspect)
             {
                 this.ViewPort.Width = viewAspect / windowAspect;
-                this.ViewPort.Left = (1f - this.ViewPort.Width) / 2f;
+                this.ViewPort.Left = (1f - Configuration.Width) / 2f;
             }
             else
             {
                 this.ViewPort.Height = windowAspect / viewAspect;
-                this.ViewPort.Top = (1 - this.ViewPort.Height) / 2f;
+                this.ViewPort.Top = (1 - Configuration.Height) / 2f;
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿using Critters.ExtensionMethods;
-using Critters.SFML_Text;
+using Critters.GraphHelpers;
 using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;

@@ -6,16 +6,13 @@ namespace Critters;
 
 public static class Configuration
 {
-    
-    public static float Scale = 0.5f;
 
-    public static uint Height = (uint)(2160 * Scale);
+    public static uint SidePanelWidth = 300;
 
-    public static uint Width = (uint)(3840 * Scale);
+    public static uint Height = 800;
 
-    public static uint PathOffsetFromTown = (uint)(100 * Scale);
+    public static uint Width = 1600;
 
-    public static int Linethickness = (int)(2 * Scale);
     public static Color Background => new Color(233, 233, 233);
 
     public static bool AllowCameraMovement => true;
@@ -58,6 +55,9 @@ public static class Configuration
 
     // Degrees per second
     public static float CameraRotationSpeed => 45f;
+
+    // Pause Key
+    public static Keyboard.Key PauseKey => Keyboard.Key.P;
 
     // Quit Key
     public static Keyboard.Key QuitKey => Keyboard.Key.Q;

@@ -16,6 +16,8 @@ namespace Critters.Object
 
     public class BaseItem
     {
+        public int Id { get; set; }
+
         public Vector2f Position { get; set; }
         public double Angle { get; set; }
         public double Life { get; set; }
@@ -23,6 +25,7 @@ namespace Critters.Object
 
         public ItemTypes Type { get; set; }
 
+        public BaseItem? Parent { get; set; }
 
         public BaseItem? Hit(Vector2i checkPosition)
         {
@@ -40,13 +43,21 @@ namespace Critters.Object
             return $"Life: {Life:00.0}  Pos: {Position.X:0000},{Position.Y:0000}";
         }
 
+    
+
         public string Info()
         {
-            if (Type== ItemTypes.Creature) return $"Life: {Life:00.0} {Fitness:00.0}";
+            if (Type == ItemTypes.Creature)
+            {
+                if (Parent != null)
+                    return $"{Id} {Life:00.0} {Fitness:00} P:{Parent.Id}" ; 
+                else
+                {
+                    return $"{Id} {Life:00.0} {Fitness:00}";
+                }
+            }
             if (Type == ItemTypes.Food) return $"Food";
             if (Type == ItemTypes.Obstacle) return $"Obstacle";
-            
-
 
             return "";
             

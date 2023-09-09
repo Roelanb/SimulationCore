@@ -1,6 +1,6 @@
 ﻿
 using Critters.GeneticAlgorithm;
-using Critters.SFML_Text;
+using Critters.GraphHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +19,10 @@ public class World
     public List<Creature> Creatures { get; set; }
     public List<Food> Foods { get; set; }
     public List<Obstacle> Obstacles { get; set; }
+
+    public Creature SelectedCreature { get; set; }
+
+    public int CreatureCount => Creatures.Count;
 
     public int GenerationCount { get; private set; } = 0;
     public int Ticks;
@@ -48,7 +52,7 @@ public class World
 
     public void InitWorld()
     {
-        for (int i = 0; i < GaConfig.PopulationSize; i++)
+        for (int i = 0; i < GaConfig.CreaturesCount; i++)
         {
             Creatures.Add(new Creature(this));
         }
@@ -83,12 +87,16 @@ public class World
             // reproduce
             if (creature.Fitness > 80)
             {
+
                 parents.Add(creature);
             }
         }
 
         foreach (Creature creature in parents)
         {
+            // reset the parents fitness
+
+            creature.Fitness = 0;
             Creatures.Add(creature.Reproduce());
         }
 

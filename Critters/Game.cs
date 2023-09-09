@@ -29,7 +29,7 @@ public class Game
 
     public Game()
     {
-        window = new RenderWindow(new VideoMode(Configuration.Width, Configuration.Height), "Simulation");
+        window = new RenderWindow(new VideoMode(Configuration.Width + Configuration.SidePanelWidth, Configuration.Height), "Simulation");
         window.SetFramerateLimit(60);
 
         window.Closed += OnClose;
@@ -98,7 +98,32 @@ public class Game
             }
 
            
+            // check for pause key
+            if (Keyboard.IsKeyPressed(Configuration.PauseKey))
+            {
+                while (true)
+                {
+                    // Process events
+                    window.DispatchEvents();
 
+                    // Draw the paths of the current best individual
+                    screen.UpdateSequence();
+
+                    // Update all the screen components that are unrelated to our sequence.
+                  //  screen.Update(deltaT);
+
+                    screen.Draw();
+
+                    // Update the window
+                    window.Display();
+
+                    // Check to see if the user has pressed the pause key again.
+                    if (Keyboard.IsKeyPressed(Configuration.PauseKey))
+                    {
+                        break;
+                    }
+                }
+            }
 
             // Check to see if the user has pressed the quit key.
             if (Keyboard.IsKeyPressed(Configuration.QuitKey) || Keyboard.IsKeyPressed(Keyboard.Key.Escape))

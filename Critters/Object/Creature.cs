@@ -1,5 +1,6 @@
 ﻿using Critters.ExtensionMethods;
-using Critters.SFML_Text;
+using Critters.GeneticAlgorithm;
+using Critters.GraphHelpers;
 using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
@@ -22,16 +23,20 @@ public class Creature : BaseItem
     public int Frame;
     public double ParentChance { get; set; }
 
+    public double LatestCenterDistance { get; set; }
+
     private World _world;
 
     public Creature(World world)
     {
+        Id = world.CreatureCount + 1;
+
         Type = ItemTypes.Creature;
 
         _world = world;
 
         // set brain to random neural network
-        Brain = new NeuralNetwork(0.0, 4, 250, 3);
+        Brain = new NeuralNetwork(0.0, 4, 20, 3);
         Brain.Randomize();
 
         // set position to random value in world
@@ -69,7 +74,7 @@ public class Creature : BaseItem
 
     public void Draw(RenderWindow window)
     {
-        if (Fitness > 0)
+        if (Fitness >= 0)
         {
             Shape.Rotation = (float)Angle;
             Shape.Position = Position;
@@ -77,7 +82,7 @@ public class Creature : BaseItem
             window.Draw(Shape);
 
             // draw the position x and y on the screen
-            window.DrawString(Info, Shape.Position);
+            window.DrawString(Info, Shape.Position + new Vector2f(0,10));
         }
     }
 
@@ -112,13 +117,15 @@ public class Creature : BaseItem
         double CenterDistance = GetDistance(closestFood?.Position, Position);
         double CenterDistanceObstacle = GetDistance(GetClosestObstacle(obstacle, Position).Position, Position);
 
-        if (CenterDistance < 30 && closestFood != null)
+        LatestCenterDistance = CenterDistance;
+
+        if (CenterDistance < GaConfig.FoodRange && closestFood != null)
         {
             Life += 30;
             Fitness += 10;
             Random random = new Random(Guid.NewGuid().GetHashCode());
             closestFood.Position = new Vector2f(Application.random.Next(0, (int)Configuration.Width), Application.random.Next(0, (int)Configuration.Height));
-            closestFood.Active = false;
+           // closestFood.Active = false;
         }
 
         Life -= 0.1;
@@ -213,7 +220,7 @@ public class Creature : BaseItem
 
 
         // set info text
-        Info.StringText = Info();
+        Info.StringText = $"{Info()}";
     }
 
 
@@ -228,7 +235,8 @@ public class Creature : BaseItem
 
     public double GetDistance(Vector2f? Start, Vector2f? End)
     {
-        if (Start == null) return 999;
+        if (Start == null) 
+            return 999;
         
         Vector2f Diff = Start.Value - End.Value;
         return Math.Sqrt(Diff.X * Diff.X + Diff.Y * Diff.Y);
@@ -237,13 +245,13 @@ public class Creature : BaseItem
     public Food? GetClosestFood(List<Food> foods, Vector2f Start)
     {
         Food? closestFood = null;
-        double Closest = 320000;
+        double closest = 32000000;
         foreach (Food f in foods)
         {
             var distance = GetDistance(Start, f.Position);
-            if (distance < Closest)
+            if (distance < closest)
             {
-                Closest = distance;
+                closest = distance;
                 closestFood = f;
             }
 
@@ -270,7 +278,10 @@ public class Creature : BaseItem
     {
         var child = new Creature(_world);
 
+        child.Parent = this;
         child.Brain = Brain.Clone();
+
+        child.Mutate();
 
         return child;
     }
@@ -284,4 +295,5 @@ public class Creature : BaseItem
         Weights[MutationPoint] = random.NextDouble();
         Brain.SetWeights(Weights);
     }
+
 }

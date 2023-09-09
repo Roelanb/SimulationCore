@@ -1,4 +1,8 @@
-﻿using MethodTimer;
+﻿using Critters.ExtensionMethods;
+using Critters.GraphHelpers;
+using MethodTimer;
+using SFML.Graphics;
+using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,10 +44,11 @@ public class NeuralNetwork
     }
 
     public NN Network;
+    private double[] ArrayOfLayers;
 
     public NeuralNetwork(double LearningRate, int InputCount, int HiddenLayerCount, int OutputCount)
     {
-        double[] ArrayOfLayers = new double[3];
+        ArrayOfLayers = new double[3];
         ArrayOfLayers[0] = InputCount;
         ArrayOfLayers[1] = HiddenLayerCount;
         ArrayOfLayers[2] = OutputCount;
@@ -87,6 +92,57 @@ public class NeuralNetwork
                     for (int k = 0; k < ArrayOfLayers[i - 1]; k++)
                     {
                         Network.Layers[i].Neurons[j].Dendrites[k].Weight = GetRand();
+                    }
+                }
+            }
+        }
+    }
+
+    public void Draw(RenderWindow window)
+    {
+
+        
+
+        var info = new FontText($"{ArrayOfLayers[0]} {ArrayOfLayers[1]} {ArrayOfLayers[2]}", Color.Black, 0.5f);
+
+        for (int x = 0; x < Network.LayerCount; x++)
+        {
+            var horPosition = new Vector2f(Configuration.Width + 40 + 100 * x, 50 );
+
+
+           
+
+            for (int y = 0; y < ArrayOfLayers[x]; y++)
+            {
+                var verPosition = new Vector2f(horPosition.X, 50 + 40 * y);
+
+                var shape = new RectangleShape(new Vector2f(10, 10))
+                {
+                    FillColor = Color.Red,
+                    Origin = new Vector2f(5, 5),
+                    Position = verPosition,
+                };
+
+                window.Draw(shape);
+
+                var neuron = Network.Layers[x].Neurons[y];
+                info.StringText = $"{neuron.Value:0.000} {neuron.Dendrites?.Count()}";
+
+                window.DrawString(info, shape.Position + new Vector2f(0, 10));
+
+                if (neuron.Dendrites != null)
+                {
+                    for (int d = 0; d < neuron.Dendrites.Count(); d++)
+                    {
+                        var line = new Line
+                        {
+                            Color = Color.Red,
+                            Thickness = (int)(neuron.Dendrites[d].Weight*5),
+                            Start = new Vector2f(Configuration.Width + 40 + 100 * (x-1), 50 + 40 * d),
+                            End = verPosition
+                        };
+
+                        window.Draw(line);
                     }
                 }
             }

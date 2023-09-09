@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimulationCore", "Simulatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Critters", "Critters\Critters.csproj", "{947780FB-9AE1-43D7-88A3-B8C9F25C92F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TensorFlow1", "TensorFlow1\TensorFlow1.csproj", "{D493254E-87D9-4641-B582-D8F9552DF742}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TensorFlow1", "TensorFlow1\TensorFlow1.csproj", "{D493254E-87D9-4641-B582-D8F9552DF742}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2A3A763-BB58-4393-81CA-615030CAFA46}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
